@@ -28,11 +28,19 @@ export function CIALogo({ size = 'md', showSubtitle = true, className, dotOnly =
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="flex items-baseline">
+        {/* Light Mode Logo */}
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg"
+          alt="Deloitte Logo"
+          width={width}
+          className="object-contain dark:hidden"
+        />
+        {/* Dark Mode Logo */}
         <img
           src="https://companieslogo.com/img/orig/deloitte_BIG.D-049d141c.png"
           alt="Deloitte Logo"
           width={width}
-          className="object-contain"
+          className="object-contain hidden dark:block"
         />
       </div>
       {showSubtitle && (

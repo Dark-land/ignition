@@ -7,6 +7,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { useStore } from '@/lib/store'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { signOut } from 'aws-amplify/auth'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export function Sidebar() {
   const router = useRouter()
@@ -25,9 +27,15 @@ export function Sidebar() {
     createConversation()
   }
   
-  const handleLogout = () => {
-    logout()
-    router.push('/login')
+  const handleLogout = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out of Cognito:', error)
+    } finally {
+      logout()
+      router.push('/login')
+    }
   }
   
   const truncateAccountId = (id: string) => {
@@ -45,7 +53,7 @@ export function Sidebar() {
     ">
       {/* Header */}
       <div className="p-4 border-b border-sidebar-border">
-        <CIALogo size="sm" showSubtitle={false} />
+        <CIALogo size="sm" showSubtitle={true} />
       </div>
       
       {/* User Info */}
@@ -134,6 +142,7 @@ export function Sidebar() {
       
       {/* Footer Actions */}
       <div className="p-4 border-t border-sidebar-border flex gap-2">
+        <ThemeToggle />
         <Button
           variant="ghost"
           size="icon"

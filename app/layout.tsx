@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
 import ConfigureAmplify from '@/components/ConfigureAmplify'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const inter = Inter({ 
@@ -27,20 +28,23 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
-        <ConfigureAmplify />
-        {children}
-        <Toaster 
-          theme="dark"
-          toastOptions={{
-            style: {
-              background: '#1a2332',
-              border: '1px solid #2d3a4d',
-              color: '#e8eaed',
-            },
-          }}
-        />
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased bg-background text-foreground transition-colors duration-200`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ConfigureAmplify />
+          {children}
+          <Toaster 
+            theme="system"
+            toastOptions={{
+              className: 'dark:bg-[#1a2332] dark:border-[#2d3a4d] dark:text-[#e8eaed] bg-card text-foreground border-border',
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   )

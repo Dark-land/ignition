@@ -3,15 +3,64 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Web / Light Theme (Deloitte Style) */
+  --background: #F7F7F5;
+  --foreground: #101010;
+  --card: #FFFFFF;
+  --card-foreground: #101010;
+  --popover: #FFFFFF;
+  --popover-foreground: #101010;
+  --primary: #86BC25;
+  --primary-foreground: #ffffff;
+  --secondary: #EBEBEA;
+  --secondary-foreground: #101010;
+  --muted: #EBEBEA;
+  --muted-foreground: #6B7280;
+  --accent: #86BC25;
+  --accent-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --border: #E0E0E0;
+  --input: #E0E0E0;
+  --ring: #86BC25;
+  --radius: 0.25rem;
+
+  /* Sidebar - Light Mode */
+  --sidebar: #000000;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #86BC25;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #222222;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1A1A1A;
+  --sidebar-ring: #86BC25;
+
+  /* Custom Colors */
+  --surface: #F0F0EE;
+  --surface-hover: #E4E4E2;
+  --aws-orange: #86BC25;
+  --aws-orange-hover: #75a620;
+  --electric-blue: #1e1e1e;
+  --success: #22c55e;
+  --warning: #f59e0b;
+
+  /* JSON Viewer Colors - Light */
+  --json-key: #0550ae;
+  --json-string: #24292f;
+  --json-number: #0550ae;
+  --json-boolean: #cf222e;
+  --json-null: #cf222e;
+}
+
+.dark {
   /* VS Code Style Dark Theme */
-  --background: #0f1923;
+  --background: #1e1e1e;
   --foreground: #cccccc;
   --card: #252526;
   --card-foreground: #cccccc;
   --popover: #252526;
   --popover-foreground: #cccccc;
   --primary: #86BC25;
-  /* Deloitte Green */
   --primary-foreground: #ffffff;
   --secondary: #2d2d30;
   --secondary-foreground: #cccccc;
@@ -24,14 +73,13 @@
   --border: #3e3e42;
   --input: #3c3c3c;
   --ring: #86BC25;
-  --radius: 0.25rem;
-
+  
   /* Sidebar - VS Code style */
-  --sidebar: #252526;
+  --sidebar: #1e1e1e;
   --sidebar-foreground: #cccccc;
   --sidebar-primary: #86BC25;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #37373d;
+  --sidebar-accent: #2d2d30;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #333333;
   --sidebar-ring: #86BC25;

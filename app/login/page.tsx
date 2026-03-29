@@ -15,7 +15,6 @@ export default function LoginPage() {
   const { login, setLoading, isLoading } = useStore()
 
   const [formData, setFormData] = useState({
-    accountId: '',
     username: '',
     password: '',
   })
@@ -37,10 +36,7 @@ export default function LoginPage() {
       })
 
       if (isSignedIn) {
-        // Fallback accountId to predefined if empty since Cognito doesn't use it directly
-        const accountId = formData.accountId || '123456789'
-        
-        login(accountId, formData.username)
+        login('cognito-user', formData.username)
         router.push('/chat')
       } else {
         // Handle challenges like NEW_PASSWORD_REQUIRED
@@ -77,7 +73,7 @@ export default function LoginPage() {
       >
         <div className="mb-8 text-center space-y-2">
           <h1 className="text-2xl font-bold tracking-tight text-foreground">Sign In</h1>
-          <p className="text-muted-foreground text-sm">Enter your credentials to access the CIA Portal</p>
+          <p className="text-muted-foreground text-sm">Enter your AWS Cognito credentials to access the CIA Portal</p>
         </div>
 
         {errorMsg && (
@@ -96,24 +92,6 @@ export default function LoginPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Account ID */}
-            <div className="space-y-2">
-              <Label htmlFor="accountId" className="text-foreground font-medium">
-                Account ID
-              </Label>
-              <Input
-                id="accountId"
-                type="text"
-                placeholder="123456789"
-                value={formData.accountId}
-                onChange={(e) => setFormData(prev => ({ ...prev, accountId: e.target.value }))}
-                className="
-                  bg-surface border-border 
-                  focus:border-primary focus:ring-1 focus:ring-primary shadow-sm
-                "
-              />
-            </div>
-
             {/* Username */}
             <div className="space-y-2">
               <Label htmlFor="username" className="text-foreground font-medium">
