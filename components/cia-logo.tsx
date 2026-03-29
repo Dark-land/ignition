@@ -17,12 +17,12 @@ const sizeMap = {
   xl: { width: 220, subtitle: 'text-base' },
 }
 
-export function CIALogo({ 
-  size = 'md', 
-  showSubtitle = true, 
-  className, 
+export function CIALogo({
+  size = 'md',
+  showSubtitle = true,
+  className,
   dotOnly = false,
-  isLoginPage = false 
+  isLoginPage = false
 }: CIALogoProps) {
   const { width, subtitle } = sizeMap[size]
 
@@ -32,24 +32,27 @@ export function CIALogo({
     )
   }
 
-  // On login page specifically, the user wants a different logo for light mode
-  const lightModeLogo = isLoginPage 
-    ? "https://companieslogo.com/img/orig/deloitte_BIG-86032e42.png"
-    : "https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg";
+  // Simplifed logo logic:
+  // 1. Chat page (isLoginPage=false): Always BIG.D for both themes.
+  // 2. Login page (isLoginPage=true): BIG.D for dark, BIG-86032e42 for light.
+  const darkLogo = "https://companieslogo.com/img/orig/deloitte_BIG.D-049d141c.png";
+  const lightLogo = isLoginPage 
+    ? "https://companieslogo.com/img/orig/deloitte_BIG-86032e42.png" 
+    : darkLogo;
 
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="flex items-baseline">
         {/* Light Mode Logo */}
         <img
-          src={lightModeLogo}
+          src={lightLogo}
           alt="Deloitte Logo"
           width={width}
           className="object-contain dark:hidden"
         />
         {/* Dark Mode Logo */}
         <img
-          src="https://companieslogo.com/img/orig/deloitte_BIG.D-049d141c.png"
+          src={darkLogo}
           alt="Deloitte Logo"
           width={width}
           className="object-contain hidden dark:block"
