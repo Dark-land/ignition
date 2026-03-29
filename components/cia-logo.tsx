@@ -30,7 +30,7 @@ export function CIALogo({ size = 'md', showSubtitle = true, className, dotOnly =
       <div className="flex items-baseline">
         {/* Light Mode Logo */}
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg"
+          src="https://companieslogo.com/img/orig/deloitte_BIG-86032e42.png"
           alt="Deloitte Logo"
           width={width}
           className="object-contain dark:hidden"
