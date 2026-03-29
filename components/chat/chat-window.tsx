@@ -21,8 +21,7 @@ export function ChatWindow() {
     currentConversationId,
     addMessage,
     createConversation,
-    sessionId,
-    setSessionId,
+    updateConversationSessionId,
   } = useStore()
   
   const currentConversation = conversations.find(c => c.id === currentConversationId)
@@ -48,10 +47,12 @@ export function ChatWindow() {
   
   const handleSendMessage = async (content: string, password?: string) => {
     let conversationId = currentConversationId
+    let requestSessionId = currentConversation?.sessionId
     
     // Create conversation if none exists
     if (!conversationId) {
       conversationId = createConversation()
+      requestSessionId = undefined // New chat shouldn't have one
     }
     
     // Add user message
@@ -61,10 +62,10 @@ export function ChatWindow() {
     setIsStreaming(true)
     
     try {
-      const response = await sendMessageToAPI(content, sessionId ?? undefined, password)
-      // Persist the session_id returned by the API
-      if (response.sessionId) {
-        setSessionId(response.sessionId)
+      const response = await sendMessageToAPI(content, requestSessionId, password)
+      // Persist the session_id returned by the API to this specific conversation
+      if (response.sessionId && (!currentConversation || currentConversation.sessionId !== response.sessionId)) {
+        updateConversationSessionId(conversationId, response.sessionId)
       }
       addMessage(conversationId, { role: 'assistant', content: response.text })
     } catch (error) {

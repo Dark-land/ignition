@@ -38,11 +38,6 @@ export function Sidebar() {
     }
   }
   
-  const truncateAccountId = (id: string) => {
-    if (id.length <= 8) return id
-    return `${id.slice(0, 4)}...${id.slice(-4)}`
-  }
-  
   if (!sidebarOpen) return null
   
   return (
@@ -60,21 +55,12 @@ export function Sidebar() {
       {user && (
         <div className="p-4 border-b border-sidebar-border">
           <div className="flex items-center gap-3">
-            <div className="
-              w-10 h-10 rounded-full 
-              bg-primary text-primary-foreground
-              flex items-center justify-center
-              font-semibold text-sm
-            ">
+            <div className="w-8 h-8 rounded bg-primary/20 text-primary flex items-center justify-center font-semibold text-sm shrink-0">
               {user.initials}
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-sidebar-foreground truncate">
-                {user.username}
-              </p>
-              <p className="text-xs text-muted-foreground truncate">
-                {truncateAccountId(user.accountId)}
-              </p>
+            <div className="flex flex-col text-left">
+              <span className="text-sm font-medium leading-none mb-1 text-foreground">{user.username}</span>
+              <span className="text-xs text-muted-foreground leading-none">AWS Authenticated</span>
             </div>
           </div>
         </div>
@@ -143,14 +129,6 @@ export function Sidebar() {
       {/* Footer Actions */}
       <div className="p-4 border-t border-sidebar-border flex gap-2">
         <ThemeToggle />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-muted-foreground hover:text-foreground"
-          aria-label="Settings"
-        >
-          <Settings className="w-5 h-5" />
-        </Button>
         <Button
           variant="ghost"
           size="icon"

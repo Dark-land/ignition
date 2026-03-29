@@ -72,15 +72,6 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
             />
             
             <div className="flex items-center gap-1 shrink-0">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground h-8 w-8"
-                aria-label="Attach file"
-              >
-                <Paperclip className="w-4 h-4" />
-              </Button>
-              
               {message && (
                 <Button
                   variant="ghost"

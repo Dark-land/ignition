@@ -12,6 +12,7 @@ export interface Conversation {
   id: string
   title: string
   messages: Message[]
+  sessionId?: string
   createdAt: Date
   updatedAt: Date
 }
@@ -28,9 +29,6 @@ interface AppState {
   isAuthenticated: boolean
   isLoading: boolean
 
-  // Session
-  sessionId: string | null
-  
   // Chat
   conversations: Conversation[]
   currentConversationId: string | null
@@ -46,11 +44,11 @@ interface AppState {
   login: (accountId: string, username: string) => void
   logout: () => void
   setLoading: (loading: boolean) => void
-  setSessionId: (sessionId: string) => void
   
   createConversation: () => string
   deleteConversation: (id: string) => void
   setCurrentConversation: (id: string | null) => void
+  updateConversationSessionId: (id: string, sessionId: string) => void
   addMessage: (conversationId: string, message: Omit<Message, 'id' | 'timestamp'>) => void
   updateConversationTitle: (id: string, title: string) => void
   
@@ -80,7 +78,6 @@ export const useStore = create<AppState>()(
       user: null,
       isAuthenticated: false,
       isLoading: false,
-      sessionId: null,
       conversations: [],
       currentConversationId: null,
       selectedModel: 'Claude Sonnet',
@@ -108,11 +105,8 @@ export const useStore = create<AppState>()(
           isAuthenticated: false,
           conversations: [],
           currentConversationId: null,
-          sessionId: null,
         })
       },
-
-      setSessionId: (sessionId) => set({ sessionId }),
       
       setLoading: (loading) => set({ isLoading: loading }),
       
@@ -148,6 +142,14 @@ export const useStore = create<AppState>()(
       },
       
       setCurrentConversation: (id) => set({ currentConversationId: id }),
+      
+      updateConversationSessionId: (id, sessionId) => {
+        set(state => ({
+          conversations: state.conversations.map(conv =>
+            conv.id === id ? { ...conv, sessionId } : conv
+          ),
+        }))
+      },
       
       addMessage: (conversationId, message) => {
         const newMessage: Message = {
@@ -197,7 +199,6 @@ export const useStore = create<AppState>()(
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,
-        sessionId: state.sessionId,
         conversations: state.conversations,
         currentConversationId: state.currentConversationId,
         selectedModel: state.selectedModel,
