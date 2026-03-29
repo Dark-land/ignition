@@ -7,6 +7,7 @@ interface CIALogoProps {
   showSubtitle?: boolean
   className?: string
   dotOnly?: boolean
+  isLoginPage?: boolean
 }
 
 const sizeMap = {
@@ -16,7 +17,13 @@ const sizeMap = {
   xl: { width: 220, subtitle: 'text-base' },
 }
 
-export function CIALogo({ size = 'md', showSubtitle = true, className, dotOnly = false }: CIALogoProps) {
+export function CIALogo({ 
+  size = 'md', 
+  showSubtitle = true, 
+  className, 
+  dotOnly = false,
+  isLoginPage = false 
+}: CIALogoProps) {
   const { width, subtitle } = sizeMap[size]
 
   if (dotOnly) {
@@ -25,12 +32,17 @@ export function CIALogo({ size = 'md', showSubtitle = true, className, dotOnly =
     )
   }
 
+  // On login page specifically, the user wants a different logo for light mode
+  const lightModeLogo = isLoginPage 
+    ? "https://companieslogo.com/img/orig/deloitte_BIG-86032e42.png"
+    : "https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg";
+
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="flex items-baseline">
         {/* Light Mode Logo */}
         <img
-          src="https://companieslogo.com/img/orig/deloitte_BIG.D-049d141c.png"
+          src={lightModeLogo}
           alt="Deloitte Logo"
           width={width}
           className="object-contain dark:hidden"

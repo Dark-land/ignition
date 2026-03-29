@@ -59,8 +59,8 @@ export function Sidebar() {
               {user.initials}
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-sm font-medium leading-none mb-1 text-foreground">{user.username}</span>
-              <span className="text-xs text-muted-foreground leading-none">AWS Authenticated</span>
+              <span className="text-sm font-medium leading-none mb-1 text-white">{user.username}</span>
+              <span className="text-xs text-white/70 leading-none">AWS Authenticated</span>
             </div>
           </div>
         </div>

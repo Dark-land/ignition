@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Lock, Loader2, AlertCircle } from 'lucide-react'
 import { CIALogo } from '@/components/cia-logo'
@@ -8,11 +8,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useStore } from '@/lib/store'
-import { signIn } from 'aws-amplify/auth'
+import { signIn, getCurrentUser } from 'aws-amplify/auth'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login, setLoading, isLoading } = useStore()
+  const { login, setLoading, isLoading, isAuthenticated } = useStore()
 
   const [formData, setFormData] = useState({
     username: '',
@@ -20,6 +20,25 @@ export default function LoginPage() {
   })
   const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Check if user is already signed in on mount
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const user = await getCurrentUser()
+        if (user) {
+          // If we have a user but store isn't synced, sync it
+          if (!isAuthenticated) {
+            login('cognito-user', user.username)
+          }
+          router.replace('/chat')
+        }
+      } catch (err) {
+        // Not signed in, that's fine
+      }
+    }
+    checkUser()
+  }, [isAuthenticated, login, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,6 +48,17 @@ export default function LoginPage() {
     setErrorMsg('')
 
     try {
+      // Check again if already signed in to prevent the "already signed in" error
+      try {
+        const currentUser = await getCurrentUser()
+        if (currentUser) {
+          router.push('/chat')
+          return
+        }
+      } catch (e) {
+        // Not signed in
+      }
+
       // Use AWS Amplify signIn API
       const { isSignedIn, nextStep } = await signIn({
         username: formData.username,
@@ -59,7 +89,7 @@ export default function LoginPage() {
     <main className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
       {/* External Logo / Brand Header */}
       <div className="mb-8">
-        <CIALogo size="lg" />
+        <CIALogo size="lg" isLoginPage={true} />
       </div>
 
       {/* Login Card */}
