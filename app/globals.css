@@ -1,56 +1,56 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* CIA Dark Theme - AWS Inspired */
+  /* VS Code Style Dark Theme */
   --background: #0f1923;
-  --foreground: #e8eaed;
-  --card: #1a2332;
-  --card-foreground: #e8eaed;
-  --popover: #1a2332;
-  --popover-foreground: #e8eaed;
-  --primary: #ff9900;
-  --primary-foreground: #0f1923;
-  --secondary: #232f3e;
-  --secondary-foreground: #e8eaed;
-  --muted: #232f3e;
-  --muted-foreground: #8b949e;
-  --accent: #00a8e8;
-  --accent-foreground: #0f1923;
-  --destructive: #f85149;
+  --foreground: #cccccc;
+  --card: #252526;
+  --card-foreground: #cccccc;
+  --popover: #252526;
+  --popover-foreground: #cccccc;
+  --primary: #86BC25;
+  /* Deloitte Green */
+  --primary-foreground: #ffffff;
+  --secondary: #2d2d30;
+  --secondary-foreground: #cccccc;
+  --muted: #2d2d30;
+  --muted-foreground: #858585;
+  --accent: #86BC25;
+  --accent-foreground: #ffffff;
+  --destructive: #f48771;
   --destructive-foreground: #ffffff;
-  --border: #2d3a4d;
-  --input: #1a2332;
-  --ring: #ff9900;
-  --radius: 0.5rem;
-  
-  /* Sidebar */
-  --sidebar: #0f1923;
-  --sidebar-foreground: #e8eaed;
-  --sidebar-primary: #ff9900;
-  --sidebar-primary-foreground: #0f1923;
-  --sidebar-accent: #1a2332;
-  --sidebar-accent-foreground: #e8eaed;
-  --sidebar-border: #2d3a4d;
-  --sidebar-ring: #ff9900;
-  
+  --border: #3e3e42;
+  --input: #3c3c3c;
+  --ring: #86BC25;
+  --radius: 0.25rem;
+
+  /* Sidebar - VS Code style */
+  --sidebar: #252526;
+  --sidebar-foreground: #cccccc;
+  --sidebar-primary: #86BC25;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #37373d;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #333333;
+  --sidebar-ring: #86BC25;
+
   /* Custom Colors */
-  --surface: #1a2332;
-  --surface-hover: #232f3e;
-  --aws-orange: #ff9900;
-  --aws-orange-hover: #ec7211;
-  --electric-blue: #00a8e8;
-  --success: #3fb950;
-  --warning: #d29922;
-  
-  /* JSON Viewer Colors */
-  --json-key: #ff9900;
-  --json-string: #3fb950;
-  --json-number: #00a8e8;
-  --json-boolean: #a371f7;
-  --json-null: #8b949e;
+  --surface: #2d2d30;
+  --surface-hover: #3e3e42;
+  --aws-orange: #86BC25;
+  --aws-orange-hover: #75a620;
+  --electric-blue: #1e1e1e;
+  --success: #89d185;
+  --warning: #cca700;
+
+  /* JSON Viewer Colors - VS Code Syntax */
+  --json-key: #9cdcfe;
+  --json-string: #ce9178;
+  --json-number: #b5cea8;
+  --json-boolean: #569cd6;
+  --json-null: #569cd6;
 }
 
 @theme inline {
@@ -87,11 +87,12 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
+
   /* Custom theme colors */
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
   --color-aws-orange: var(--aws-orange);
+  /* Keep naming for compatibility but use green */
   --color-aws-orange-hover: var(--aws-orange-hover);
   --color-electric-blue: var(--electric-blue);
   --color-success: var(--success);
@@ -107,12 +108,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
-/* Custom scrollbar for dark theme */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -131,49 +133,26 @@
   background: var(--muted-foreground);
 }
 
-/* Animations */
+/* Animations - simplified for corporate feel */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(10px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes pulse-dot {
-  0%, 80%, 100% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 153, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 153, 0, 0.5);
   }
 }
 
@@ -183,44 +162,6 @@
 
 .animate-slide-up {
   animation: slideUp 0.3s ease-out forwards;
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 1.4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}
-
-/* Particle background */
-.particle-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(255, 153, 0, 0.4);
-  border-radius: 50%;
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Gradient backgrounds */
-.bg-radial-glow {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 153, 0, 0.15) 0%,
-    rgba(15, 25, 35, 0) 70%
-  );
 }
 
 /* Message animations */
@@ -236,5 +177,5 @@
 /* Focus styles */
 .focus-orange:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--aws-orange);
+  box-shadow: 0 0 0 2px var(--primary);
 }

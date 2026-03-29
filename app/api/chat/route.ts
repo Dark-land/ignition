@@ -1,19 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CIA_API_URL =
-  process.env.NEXT_PUBLIC_CIA_API_URL ||
-  'https://74l4qlpayd.execute-api.us-east-1.amazonaws.com/dev-dt-il-ai-cloud-agent/chat'
+  process.env.NEXT_PUBLIC_CIA_API_URL || ''
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    const { message, session_id, password } = await req.json()
+
+    // Explicitly construct the upstream payload
+    const payload: Record<string, string> = { message }
+    if (session_id) payload.session_id = session_id
+    if (password) payload.password = password
 
     const response = await fetch(CIA_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     })
 
     const responseText = await response.text()

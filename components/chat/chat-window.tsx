@@ -46,7 +46,7 @@ export function ChatWindow() {
     }
   }
   
-  const handleSendMessage = async (content: string) => {
+  const handleSendMessage = async (content: string, password?: string) => {
     let conversationId = currentConversationId
     
     // Create conversation if none exists
@@ -61,7 +61,7 @@ export function ChatWindow() {
     setIsStreaming(true)
     
     try {
-      const response = await sendMessageToAPI(content, sessionId ?? undefined)
+      const response = await sendMessageToAPI(content, sessionId ?? undefined, password)
       // Persist the session_id returned by the API
       if (response.sessionId) {
         setSessionId(response.sessionId)

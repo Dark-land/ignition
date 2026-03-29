@@ -76,12 +76,13 @@ export function Sidebar() {
       <div className="p-4">
         <Button
           onClick={handleNewChat}
-          variant="outline"
+          variant="default" // Using default (primary) rather than outline
           className="
             w-full justify-start gap-2
-            border-primary text-primary
-            hover:bg-primary hover:text-primary-foreground
+            bg-primary text-primary-foreground
+            hover:bg-primary/90
             transition-colors duration-200
+            shadow-sm font-semibold
           "
         >
           <MessageSquarePlus className="w-4 h-4" />

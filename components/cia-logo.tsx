@@ -6,147 +6,62 @@ interface CIALogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   showSubtitle?: boolean
   className?: string
+  dotOnly?: boolean
 }
 
 const sizeMap = {
-  sm: { shield: 32, text: 'text-lg', subtitle: 'text-[10px]' },
-  md: { shield: 48, text: 'text-2xl', subtitle: 'text-xs' },
-  lg: { shield: 64, text: 'text-3xl', subtitle: 'text-sm' },
-  xl: { shield: 80, text: 'text-4xl', subtitle: 'text-base' },
+  sm: { width: 100, subtitle: 'text-[10px]' },
+  md: { width: 140, subtitle: 'text-xs' },
+  lg: { width: 180, subtitle: 'text-sm' },
+  xl: { width: 220, subtitle: 'text-base' },
 }
 
-export function CIALogo({ size = 'md', showSubtitle = true, className }: CIALogoProps) {
-  const { shield, text, subtitle } = sizeMap[size]
-  
+export function CIALogo({ size = 'md', showSubtitle = true, className, dotOnly = false }: CIALogoProps) {
+  const { width, subtitle } = sizeMap[size]
+
+  if (dotOnly) {
+    return (
+      <div className={cn('rounded-full bg-primary', className)} style={{ width: width / 10, height: width / 10 }} />
+    )
+  }
+
   return (
-    <div className={cn('flex items-center gap-3', className)}>
-      {/* Shield with terminal prompt icon */}
-      <div 
-        className="relative flex items-center justify-center"
-        style={{ width: shield, height: shield }}
-      >
-        <svg
-          viewBox="0 0 40 44"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
-        >
-          {/* Shield outline */}
-          <path
-            d="M20 2L4 8V20C4 31.05 10.74 41.13 20 44C29.26 41.13 36 31.05 36 20V8L20 2Z"
-            fill="#1a2332"
-            stroke="#ff9900"
-            strokeWidth="2"
-          />
-          {/* Inner shield gradient */}
-          <path
-            d="M20 5L7 10V20C7 29.44 12.64 38.02 20 40.8C27.36 38.02 33 29.44 33 20V10L20 5Z"
-            fill="url(#shieldGradient)"
-          />
-          {/* Terminal prompt >_ */}
-          <text
-            x="20"
-            y="26"
-            textAnchor="middle"
-            fill="#ff9900"
-            fontFamily="monospace"
-            fontSize="14"
-            fontWeight="bold"
-          >
-            {'>_'}
-          </text>
-          <defs>
-            <linearGradient id="shieldGradient" x1="20" y1="5" x2="20" y2="40" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#232f3e" />
-              <stop offset="100%" stopColor="#1a2332" />
-            </linearGradient>
-          </defs>
-        </svg>
+    <div className={cn('flex flex-col', className)}>
+      <div className="flex items-baseline">
+        <img
+          src="https://companieslogo.com/img/orig/deloitte_BIG.D-049d141c.png"
+          alt="Deloitte Logo"
+          width={width}
+          className="object-contain"
+        />
       </div>
-      
-      {/* Text */}
-      <div className="flex flex-col">
-        <span className={cn('font-bold text-foreground tracking-tight', text)}>
+      {showSubtitle && (
+        <span className={cn('text-muted-foreground font-medium uppercase tracking-widest mt-1.5 opacity-90', subtitle)}>
           CIA
         </span>
-        {showSubtitle && (
-          <span className={cn('text-muted-foreground tracking-wide', subtitle)}>
-            Cloud & Infrastructure Agent
-          </span>
-        )}
-      </div>
+      )}
     </div>
   )
 }
 
 export function CIAShieldIcon({ size = 24, className }: { size?: number; className?: string }) {
+  // Keeping same component name for compatibility, but rendering a green dot with CIA text
   return (
-    <svg
-      viewBox="0 0 40 44"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size * 1.1}
-      className={className}
+    <div
+      className={cn('rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold tracking-tighter', className)}
+      style={{ width: size, height: size, fontSize: size * 0.35 }}
     >
-      <path
-        d="M20 2L4 8V20C4 31.05 10.74 41.13 20 44C29.26 41.13 36 31.05 36 20V8L20 2Z"
-        fill="#1a2332"
-        stroke="#ff9900"
-        strokeWidth="2"
-      />
-      <path
-        d="M20 5L7 10V20C7 29.44 12.64 38.02 20 40.8C27.36 38.02 33 29.44 33 20V10L20 5Z"
-        fill="url(#shieldGradientSmall)"
-      />
-      <text
-        x="20"
-        y="26"
-        textAnchor="middle"
-        fill="#ff9900"
-        fontFamily="monospace"
-        fontSize="14"
-        fontWeight="bold"
-      >
-        {'>_'}
-      </text>
-      <defs>
-        <linearGradient id="shieldGradientSmall" x1="20" y1="5" x2="20" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#232f3e" />
-          <stop offset="100%" stopColor="#1a2332" />
-        </linearGradient>
-      </defs>
-    </svg>
+      CIA
+    </div>
   )
 }
 
 export function CIAWatermark({ className }: { className?: string }) {
+  // Replaced with a subtle text watermark since we removed the shield
   return (
-    <div className={cn('opacity-5', className)}>
-      <svg
-        viewBox="0 0 40 44"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        <path
-          d="M20 2L4 8V20C4 31.05 10.74 41.13 20 44C29.26 41.13 36 31.05 36 20V8L20 2Z"
-          fill="currentColor"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-        <text
-          x="20"
-          y="26"
-          textAnchor="middle"
-          fill="currentColor"
-          fontFamily="monospace"
-          fontSize="14"
-          fontWeight="bold"
-        >
-          {'>_'}
-        </text>
-      </svg>
+    <div className={cn('opacity-5 flex items-baseline gap-2', className)}>
+      <span className="font-bold text-6xl tracking-tighter">Deloitte</span>
+      <div className="w-4 h-4 rounded-full bg-current" />
     </div>
   )
 }

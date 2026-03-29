@@ -31,7 +31,8 @@ export const API_CONFIG = {
 // Helper function to call your API
 export async function sendMessageToAPI(
   message: string,
-  sessionId?: string
+  sessionId?: string,
+  password?: string
 ): Promise<{ text: string; sessionId?: string }> {
   const { endpoint, timeout, headers } = API_CONFIG
 
@@ -48,6 +49,9 @@ export async function sendMessageToAPI(
     const body: Record<string, unknown> = { message }
     if (sessionId) {
       body.session_id = sessionId
+    }
+    if (password) {
+      body.password = password
     }
 
     const response = await fetch(endpoint, {
