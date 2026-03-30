@@ -32,6 +32,7 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
     if (message.trim() && !disabled) {
       onSendMessage(message.trim(), password || undefined)
       setMessage('')
+      setPassword('')
     }
   }
   

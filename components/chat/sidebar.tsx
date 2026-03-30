@@ -107,9 +107,10 @@ export function Sidebar() {
                   deleteConversation(conv.id)
                 }}
                 className="
-                  opacity-0 group-hover:opacity-100
+                  flex shrink-0
+                  opacity-100 sm:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100
                   p-1 rounded hover:bg-destructive/20
-                  transition-opacity duration-200
+                  transition-all duration-200
                 "
                 aria-label="Delete conversation"
               >
