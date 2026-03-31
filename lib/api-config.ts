@@ -14,6 +14,7 @@
 //   Or plain text response
 //
 // =============================================================
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 export const API_CONFIG = {
   // Proxy route - avoids CORS issues by routing through Next.js server
@@ -54,12 +55,25 @@ export async function sendMessageToAPI(
       body.password = password
     }
 
+    // Get JWT from Cognito
+    let authHeaders: Record<string, string> = { ...headers }
+    try {
+      const session = await fetchAuthSession()
+      const token = session.tokens?.idToken?.toString()
+      if (token) {
+        authHeaders['Authorization'] = `Bearer ${token}`
+      }
+    } catch (e) {
+      console.warn('No active auth session found for JWT propagation', e)
+    }
+
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers,
+      headers: authHeaders,
       body: JSON.stringify(body),
       signal: controller.signal,
     })
+
 
     clearTimeout(timeoutId)
 

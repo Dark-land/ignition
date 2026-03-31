@@ -12,13 +12,20 @@ export async function POST(req: NextRequest) {
     if (session_id) payload.session_id = session_id
     if (password) payload.password = password
 
+    const authHeader = req.headers.get('Authorization')
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+    if (authHeader) {
+      headers['Authorization'] = authHeader
+    }
+
     const response = await fetch(CIA_API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(payload),
     })
+
 
     const responseText = await response.text()
 
